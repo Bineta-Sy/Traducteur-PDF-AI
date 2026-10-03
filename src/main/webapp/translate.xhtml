@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html
+xmlns:h="http://jcp.org"
+xmlns:p="http://primefaces.org/ui">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h:form enctype="multipart/form-data">
+
+    <p:fileUpload
+        mode="simple"
+        value="#{translateBean.file}" />
+
+    <p:commandButton
+        value="Traduire PDF"
+        action="#{translateBean.translatePdf}" />
+
+</h:form>
+</body>
+</html>

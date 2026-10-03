@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Spring core App</title>
+<style>
+#form{
+ font-family: system-ui;
+ width:300px;
+ padding:10px;
+ position:absolute;
+ left:50%;
+ top:50%;
+ transform:translate(-50%, -50%);
+ box-shadow:0px 0px 1px black;
+ border-radius:10px;
+ padding-bottom:20px;
+}
+.label{
+display:block;
+ margin-bottom:10px;
+}
+.loginValue{
+  padding:10px;
+  display:block;
+  margin-bottom:5px;
+  border:1px solid gray;
+  width:100%;
+  border-radius:5px;
+}
+#btn{
+text-align:center;
+margin-bottom:10px;
+width:100%;
+display:block;
+}
+</style>
+</h:head>
+
+<h:body>
+	<div  id="form">
+	<h2 style="text-align:center;">Se Connecter</h2>
+		<h:form  id="loginForm">
+		      <p:messages id="loginMsgs" styleClass="w-100 danger"/>
+		
+			<h:outputLabel value="login" id="login" styleClass="label" />
+			<h:inputText value="#{loginBean.login}" styleClass="loginValue"/>
+			<h:outputLabel value="Mot de Pass" styleClass="label"/>
+			<h:inputSecret value="#{loginBean.password}"  styleClass="loginValue"/>
+			<p:commandButton value="Se connecter"
+			update="loginForm:loginMsgs"
+				action="#{loginBean.logPersonne}"
+				style="width:100%;margin-bottom:10px; margin-top:5px;"
+				/>
+		</h:form>
+	</div>
+</h:body>
+</html>

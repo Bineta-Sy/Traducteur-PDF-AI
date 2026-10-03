@@ -1,0 +1,393 @@
+/* ═══════════════════════════════════════════════════════════════════
+   PDF Translator – Feuille de styles principale
+   Police : IBM Plex Sans (Google Fonts)
+   Palette : Bleu nuit #0f1724 · Bleu vif #2563eb · Doré #f59e0b
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ─── Variables ──────────────────────────────────────────────────── */
+:root {
+    --bg-deep:      rgb(128, 0, 64);
+    --bg-card:      rgb(128, 0, 0);
+    --bg-card2:     rgb(64, 0, 0);
+    --border:       rgb(64, 0, 0);
+    --blue:         rgb(128, 64, 64);
+    --blue-light:   rgb(128, 64, 64);
+    --blue-glow:    rgb(128, 64, 64);
+    --gold:         #f59e0b;
+    --gold-light:   #fbbf24;
+    --green:        #10b981;
+    --red:          #ef4444;
+    --text-primary: #e8edf5;
+    --text-muted:   #64748b;
+    --text-faint:   #2d3d55;
+    --radius:       14px;
+    --shadow:       0 4px 32px rgba(0,0,0,0.45);
+}
+
+/* ─── Reset & Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    margin: 0; padding: 0;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────── */
+.app-header {
+    background: linear-gradient(135deg, rgb(64, 0, 0) 0%, rgb(64, 0, 0) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px);
+}
+.header-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 1.5rem;
+}
+.logo-area { display: flex; align-items: center; gap: 14px; }
+.logo-icon { font-size: 2rem; }
+.app-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(90deg, #e8edf5, var(--blue-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.app-subtitle {
+    margin: 0; font-size: 0.78rem;
+    color: var(--text-muted); letter-spacing: .04em;
+}
+.app-subtitle .arrow {
+    color: var(--gold); font-weight: 700;
+}
+
+.pipeline-steps {
+    display: flex; align-items: center; gap: 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+.pipeline-steps .step {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    border-radius: 20px;
+    color: var(--blue-light);
+}
+.pipeline-steps .step-arrow { color: var(--text-faint); }
+
+/* ─── Main Container ─────────────────────────────────────────────── */
+.main-container {
+    max-width: 780px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* ─── Cards ──────────────────────────────────────────────────────── */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+.card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), #7c3aed, var(--gold));
+    opacity: 0.7;
+}
+
+.card-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+.card-header h2 {
+    margin: 0; font-size: 1.05rem; font-weight: 600;
+    color: var(--text-primary);
+}
+.card-icon { font-size: 1.5rem; }
+
+/* ─── PrimeFaces FileUpload customisation ────────────────────────── */
+.upload-component .ui-fileupload {
+    background: transparent !important;
+    border: none !important;
+}
+.upload-component .ui-fileupload-buttonbar {
+    background: var(--bg-card2) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    padding: 1rem !important;
+    margin-bottom: 1rem;
+}
+.upload-component .ui-fileupload-content {
+    background: var(--bg-deep) !important;
+    border: 2px dashed var(--border) !important;
+    border-radius: 10px !important;
+    min-height: 130px !important;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted) !important;
+    font-size: 0.9rem;
+    transition: border-color .2s, background .2s;
+}
+.upload-component .ui-fileupload-content:hover {
+    border-color: var(--blue) !important;
+    background: rgb(192, 192, 192) !important;
+}
+
+/* ─── File Info ──────────────────────────────────────────────────── */
+.file-info {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 1rem;
+}
+.file-icon { font-size: 1.2rem; }
+.file-name { flex: 1; font-weight: 500; font-size: 0.9rem; }
+.file-badge {
+    background: rgb(128, 0, 0);
+    color: var(--blue-light);
+    font-size: 0.7rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 20px;
+    letter-spacing: .06em;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────── */
+.action-bar {
+    display: flex; gap: 1rem; margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-translate .ui-button,
+.btn-translate.ui-button {
+    background: var(--blue) !important;
+    border: none !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    padding: 0.7rem 2rem !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
+    transition: background .2s, box-shadow .2s, transform .1s !important;
+    box-shadow: 0 0 0 0 var(--blue-glow) !important;
+}
+.btn-translate .ui-button:hover:not(:disabled),
+.btn-translate.ui-button:hover:not(:disabled) {
+    background: var(--blue-light) !important;
+    box-shadow: 0 0 20px var(--blue-glow) !important;
+    transform: translateY(-1px) !important;
+}
+.btn-translate .ui-button:disabled,
+.btn-translate.ui-button:disabled {
+    opacity: 0.4 !important; cursor: not-allowed !important;
+}
+
+.btn-download .ui-button,
+.btn-download.ui-button {
+    background: var(--green) !important;
+    border: none !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    padding: 0.7rem 2rem !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
+}
+
+.btn-reset .ui-button,
+.btn-reset.ui-button {
+    background: transparent !important;
+    border: 1px solid var(--border) !important;
+    color: var(--text-muted) !important;
+    font-weight: 500 !important;
+    padding: 0.7rem 1.5rem !important;
+    border-radius: 8px !important;
+}
+.btn-reset .ui-button:hover,
+.btn-reset.ui-button:hover {
+    border-color: var(--blue) !important;
+    color: var(--blue-light) !important;
+}
+
+/* ─── Progress Bar ───────────────────────────────────────────────── */
+.progress-active .ui-progressbar {
+    background: var(--bg-deep) !important;
+    border: 1px solid var(--border) !important;
+}
+.progress-active .ui-progressbar-value {
+    background: linear-gradient(90deg, var(--blue), var(--blue-light)) !important;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+.progress-done .ui-progressbar-value {
+    background: var(--green) !important;
+}
+.progress-error .ui-progressbar-value {
+    background: var(--red) !important;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+/* ─── Status Message ─────────────────────────────────────────────── */
+.status-message {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 1rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg-card2);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    border-left: 3px solid var(--blue);
+}
+.status-message.status-error {
+    border-left-color: var(--red);
+    color: #fca5a5;
+}
+.status-icon { font-size: 1.1rem; }
+
+/* ─── Pipeline Tracker ───────────────────────────────────────────── */
+.pipeline-tracker {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+}
+.pipeline-step {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 8px; flex: 1;
+    font-size: 0.78rem; text-align: center;
+    color: var(--text-faint);
+    transition: color .3s;
+}
+.pipeline-step.step-active { color: var(--blue-light); }
+.pipeline-step.step-done   { color: var(--green); }
+
+.step-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--text-faint);
+    transition: background .3s, box-shadow .3s;
+}
+.step-active .step-dot {
+    background: var(--blue);
+    box-shadow: 0 0 10px var(--blue-glow);
+    animation: dotPulse 1.2s ease-in-out infinite;
+}
+.step-done .step-dot {
+    background: var(--green);
+}
+
+@keyframes dotPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 8px var(--blue-glow); }
+    50% { transform: scale(1.4); box-shadow: 0 0 18px var(--blue-glow); }
+}
+
+.pipeline-connector {
+    flex: 1; height: 1px;
+    background: var(--border);
+    margin-top: 6px; /* align with dot center */
+    max-width: 60px;
+}
+
+/* ─── Stats Grid ─────────────────────────────────────────────────── */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.stat-item {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+}
+.stat-value {
+    display: block;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--blue-light);
+    font-family: 'IBM Plex Mono', monospace;
+}
+.stat-label {
+    font-size: 0.72rem; color: var(--text-muted);
+    letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* ─── Output filename ────────────────────────────────────────────── */
+.output-filename {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(16, 185, 129, 0.07);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 1rem;
+    font-weight: 500; font-size: 0.9rem;
+    color: var(--green);
+}
+
+/* ─── Error Card ─────────────────────────────────────────────────── */
+.error-card::before {
+    background: var(--red);
+    opacity: 1;
+}
+.error-details {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    color: #fca5a5;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+}
+
+/* ─── Messages PrimeFaces ────────────────────────────────────────── */
+.msg-panel .ui-messages {
+    border-radius: 8px !important;
+    border: none !important;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────── */
+.app-footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--text-faint);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--bg-card);
+    margin-top: 2rem;
+}
+.app-footer strong { color: var(--text-muted); }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .header-inner { flex-direction: column; height: auto; padding: 1rem 0; }
+    .pipeline-steps { display: none; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .card { padding: 1.2rem; }
+}

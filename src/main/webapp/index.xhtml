@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Translator – FR → EN</title>
+    <h:outputStylesheet library="css" name="translator.css" />
+</h:head>
+
+<h:body>
+
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="logo-area">
+                <span class="logo-icon">📄</span>
+                <div>
+                    <h1 class="app-title">PDF Translator</h1>
+                    <p class="app-subtitle">Français <span class="arrow">→</span> Anglais</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <h:form id="mainForm" enctype="multipart/form-data">
+
+        <div class="main-container">
+
+            <p:messages id="messagesPanel" showSummary="true" showDetail="true"
+                        closable="true" styleClass="msg-panel" />
+
+            <!-- ── UPLOAD ─────────────────────────────────────────────── -->
+            <p:panel id="uploadPanel" styleClass="card upload-card"
+                     rendered="#{!translatorBean.done and !translatorBean.error}">
+
+                <div class="card-header">
+                    <span class="card-icon">⬆</span>
+                    <h2>1. Sélectionnez votre PDF</h2>
+                </div>
+
+                <p:fileUpload id="fileUpload"
+                              mode="simple"
+                              skinSimple="true"
+                              value="#{translatorBean.uploadedFile}"
+                              accept=".pdf,application/pdf"
+                              maxFileSize="52428800"
+                              styleClass="upload-component" />
+
+                <div class="action-bar">
+                    <p:commandButton id="btnTranslate"
+                                     value="#{translatorBean.processing ? 'Traduction en cours...' : 'Traduire'}"
+                                     icon="pi pi-language"
+                                     action="#{translatorBean.startTranslation}"
+                                     update="mainForm"
+                                     process="@form"
+                                     disabled="#{translatorBean.processing}"
+                                     styleClass="btn-translate" />
+                </div>
+            </p:panel>
+
+            <!-- ── SAISIE NOM + ENREGISTREMENT ───────────────────────── -->
+            <p:panel id="resultPanel" styleClass="card result-card"
+                     rendered="#{translatorBean.done and !translatorBean.saved}">
+
+                <div class="card-header">
+                    <span class="card-icon">💾</span>
+                    <h2>2. Nommez et enregistrez le PDF traduit</h2>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value">#{translatorBean.result.pageCount}</span>
+                        <span class="stat-label">Pages</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">#{translatorBean.result.wordCount}</span>
+                        <span class="stat-label">Mots traduits</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">#{translatorBean.formattedProcessingTime}</span>
+                        <span class="stat-label">Temps</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">FR → EN</span>
+                        <span class="stat-label">Langue</span>
+                    </div>
+                </div>
+
+                <div class="output-filename">
+                    <span class="file-icon">📄</span>
+                    <span>Fichier source : </span>
+                    <strong>#{translatorBean.result.originalFileName}</strong>
+                </div>
+
+                <div class="filename-input-area">
+                    <label class="filename-label" for="mainForm:fileNameInput">
+                        <span class="file-icon">📝</span>
+                        Nom du fichier traduit à enregistrer
+                    </label>
+                    <div class="filename-input-row">
+                        <p:inputText id="fileNameInput"
+                                     value="#{translatorBean.customFileName}"
+                                     styleClass="filename-input"
+                                     placeholder="ex: rapport_annuel_2024_EN"
+                                     required="true"
+                                     requiredMessage="Veuillez saisir un nom de fichier." />
+                        <span class="filename-ext">.pdf</span>
+                    </div>
+                    <small class="filename-hint">
+                        Le fichier sera enregistré dans le répertoire de sortie du serveur.
+                    </small>
+                </div>
+
+                <div class="action-bar">
+                    <p:commandButton value="Enregistrer le PDF traduit"
+                                     icon="pi pi-save"
+                                     action="#{translatorBean.saveTranslation}"
+                                     update="mainForm"
+                                     process="@form"
+                                     styleClass="btn-download" />
+
+                    <p:commandButton value="Nouveau PDF"
+                                     icon="pi pi-refresh"
+                                     action="#{translatorBean.reset}"
+                                     update="mainForm"
+                                     process="@this"
+                                     styleClass="btn-reset" />
+                </div>
+            </p:panel>
+
+            <!-- ── CONFIRMATION ───────────────────────────────────────── -->
+            <p:panel id="savedPanel" styleClass="card result-card"
+         rendered="#{translatorBean.saved}">
+
+    <div class="card-header">
+        <span class="card-icon">✅</span>
+        <h2>PDF enregistré avec succès</h2>
+    </div>
+
+    <div class="output-filename">
+        <span class="file-icon">📄</span>
+        <span>Fichier original : </span>
+        <strong>#{translatorBean.result.originalFileName}</strong>
+    </div>
+
+    <div class="output-filename">
+        <span class="file-icon">🌐</span>
+        <span>Fichier traduit : </span>
+        <strong>#{translatorBean.result.translatedFileName}</strong>
+    </div>
+
+    <div class="output-filename">
+        <span class="file-icon">📁</span>
+        <span>Enregistré dans : </span>
+        <code>#{translatorBean.savedPath}</code>
+    </div>
+
+    <div class="action-bar">
+
+        <!-- Ouvre le PDF traduit dans un nouvel onglet via l'endpoint REST -->
+       <h:outputLink value="#{request.contextPath}/pdf-viewer?file=#{translatorBean.result.translatedFileName}"
+              target="_blank"
+              styleClass="btn-view ui-button ui-widget ui-corner-all">
+    <span class="pi pi-eye" style="margin-right:6px"/>
+    Visualiser le PDF traduit
+</h:outputLink>
+        <p:commandButton value="Traduire un autre PDF"
+                         icon="pi pi-refresh"
+                         action="#{translatorBean.reset}"
+                         update="mainForm"
+                         process="@this"
+                         styleClass="btn-reset" />
+    </div>
+</p:panel>
+
+
+            <!-- ── ERREUR ──────────────────────────────────────────────── -->
+            <p:panel id="errorPanel" styleClass="card error-card"
+                     rendered="#{translatorBean.error}">
+
+                <div class="card-header">
+                    <span class="card-icon">❌</span>
+                    <h2>Une erreur est survenue</h2>
+                </div>
+
+                <p class="error-details">#{translatorBean.errorMessage}</p>
+
+                <div class="action-bar">
+                    <p:commandButton value="Réessayer"
+                                     icon="pi pi-undo"
+                                     action="#{translatorBean.reset}"
+                                     update="mainForm"
+                                     process="@this"
+                                     styleClass="btn-reset" />
+                </div>
+            </p:panel>
+
+        </div>
+    </h:form>
+
+    <footer class="app-footer">
+        <p>PDF Translator · DeepL Document API</p>
+    </footer>
+
+</h:body>
+</html>
